@@ -12,7 +12,7 @@
 <body>
     <nav class="navbar">
         <div class="container-fluid">
-            <a href="/" class=" navbar-brand">Portal</a>
+            <a href="/" class=" navbar-brand">作品集管理器</a>
         </div>
     </nav>
     <div class="container">
