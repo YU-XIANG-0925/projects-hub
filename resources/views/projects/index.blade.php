@@ -8,7 +8,7 @@
 
     <div class="row g-3">
         <div class="col-md-6 col-lg-4">
-            <div class="card h-100">
+            <div class="card h-100 hover-lift">
                 <div class="card-body">
                     <h5 class="card-title">Demo Project</h5>
                     <p class="card-text text-muted">Placeholder card. 之後改成 DB 驅動。</p>
