@@ -1,46 +1,44 @@
-# Log: Projects (DB-backed) show.blade.php demo
+# Log: Projects(資料庫驅動) show.blade.php 示範
 
-## Goal
-Demonstrate a DB-backed `/projects/{project:slug}` flow using `projects/show.blade.php`, based on the current project state (Laravel 12 + Blade + Bootstrap skeleton).
+## 目標
+基於目前專案狀態(Laravel 12 + Blade + Bootstrap 骨架)，示範一個由資料庫驅動的 `/projects/{project:slug}` 流程，並使用 `projects/show.blade.php` 進行渲染。
 
-## Constraints
-- Do not assume existing DB tables beyond Laravel defaults.
-- Keep the demo minimal but real (route model binding + controller + migration + seed).
+## 限制條件
+- 不預設存在任何額外的資料表(只以 Laravel 預設為基準)。
+- 示範要最小化但是真實可運作(包含 route model binding + controller + migration + seed)。
 
-## Plan
-1) Add `Project` model + migration.
-2) Add `ProjectController` (index + show).
-3) Update routes to use controller + `{project:slug}`.
-4) Update `projects/index.blade.php` and `projects/show.blade.php` to render DB data.
-5) Add a BMI practice page (Blade) and set the demo project to embed it.
-6) Run migration/seed if DB is ready; otherwise record the failure and provide next-step fix.
+## 計畫
+1) 新增 `Project` model + migration。
+2) 新增 `ProjectController`(index + show)。
+3) 更新 routes，改成使用 controller + `{project:slug}`。
+4) 更新 `projects/index.blade.php` 與 `projects/show.blade.php`，讓它們渲染 DB 資料。
+5) 新增 BMI 練習頁(Blade)，並讓示範用的專案用 iframe 內嵌這個頁面。
+6) 若 DB 已準備好就執行 migration/seed；否則記錄失敗原因並提供下一步修正方式。
 
-## Changes
-- Added `Project` model + migration (projects table).
-- Added `ProjectController` with DB-backed `index()` and `show()`.
-- Switched routes:
-  - `GET /projects` -> controller
-  - `GET /projects/{project:slug}` -> route model binding
-- Updated views:
-  - `projects/index.blade.php` renders DB list
-  - `projects/show.blade.php` renders a single project record
-- Added a BMI practice page:
+## 變更內容
+- 新增 `Project` model + migration(建立 projects 資料表)。
+- 新增 `ProjectController`，提供 DB 驅動的 `index()` 與 `show()`。
+- 調整路由:
+  - `GET /projects` -> 由 controller 處理
+  - `GET /projects/{project:slug}` -> 使用 route model binding
+- 更新 views:
+  - `projects/index.blade.php` 渲染 DB 列表
+  - `projects/show.blade.php` 渲染單一 project 資料
+- 新增 BMI 練習頁:
   - `GET /projects/practice/bmi-calculator` -> `projects/practice/bmi-calculator.blade.php`
 
-## Next: Run migration + seed
+## 驗證
+- `/projects` 應該會列出 `BMI Calculator`。
+- `/projects/bmi-calculator` 應該會渲染 `projects/show.blade.php`，並用 iframe 內嵌練習頁。
 
-## Verify
-- `/projects` should list `BMI Calculator`.
-- `/projects/bmi-calculator` should render `projects/show.blade.php` and embed the practice page via iframe.
+## 修正項目(Fixups)
+- 透過在 `app/Models/Project.php` 加入 `$fillable` 修正 `MassAssignmentException`。
+- 用 `tinker updateOrCreate` 建立示範資料 `bmi-calculator`(type=embed)。
 
-## Fixups
-- Resolved `MassAssignmentException` by adding `$fillable` in `app/Models/Project.php`.
-- Seeded demo record: `bmi-calculator` (type=embed) via `tinker updateOrCreate`.
+## 本機驗證(Local verification)
+- `GET /projects` -> 應該會列出 BMI Calculator
+- `GET /projects/bmi-calculator` -> 應該會渲染 show.blade.php 並顯示 iframe
+- `GET /projects/practice/bmi-calculator` -> 應該會顯示練習頁
 
-## Local verification
-- `GET /projects` -> should list BMI Calculator.
-- `GET /projects/bmi-calculator` -> should render show.blade.php and iframe.
-- `GET /projects/practice/bmi-calculator` -> should render the practice page.
-
-## Notes
-- Removed temporary backup file: `routes/web.php.bak`.
+## 備註
+- 已移除暫時的備份檔: `routes/web.php.bak`
