@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=LXGW+WenKai+Mono+TC&display=swap');
+
+/* === 全域基礎樣式 === */
+body {
+    background: var(--app-bg);
+    color: var(--app-text);
+    font-family: "LXGW WenKai Mono TC", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.navbar-brand {
+    font-family: "LXGW WenKai Mono TC", sans-serif;
+}
+
+:root {
+    /* --- 1. 英雄藍 Hero Blue (背景/標題) --- */
+    --hero-blue-light: #4d7ec4; /* 輔助背景 / 連結懸停 */
+    --hero-blue: #0047ab; /* 網站主色 / 標題列 */
+    --hero-blue-dark: #002f70; /* 頁尾 / 深色底圖 */
+
+    /* --- 2. 黃金時代 Golden Era (按鈕/高光) --- */
+    --golden-era-light: #ffdb4d; /* 按鈕高光 / 懸停 */
+    --golden-era: #ffcc00; /* 主要按鈕 (CTA) */
+    --golden-era-dark: #b38f00; /* 按鈕陰影 / 邊框 */
+
+    /* --- 3. 緋紅重擊 Crimson Strike (強調/攻擊) --- */
+    --crimson-strike-light: #eb5f65; /* 錯誤提示背景 */
+    --crimson-strike: #e31b23; /* 刪除按鈕 / 警告 */
+    --crimson-strike-dark: #9f1318; /* 強調邊框 / 重點 */
+
+    /* --- 4. 皮膚與光 Skin & Light (內容/皮膚) --- */
+    --skin-and-light-light: #fff5e0; /* 卡片背景 / 輸入框 */
+    --skin-and-light: #ffe0b0; /* 內容區塊 / 彈窗 */
+    --skin-and-light-dark: #d4b080; /* 分隔線 / 禁用狀態 */
+
+    /* --- 5. 墨水陰影 Ink Shadow (輪廓/陰影) --- */
+    --ink-shadow-light: #4d4d4d; /* 次要文字 / 註解 */
+    --ink-shadow: #1a1a1a; /* 主要文字 / 標題 */
+    --ink-shadow-dark: #000000; /* 元件輪廓 / 投影 */
+
+    /* 補充色票 */
+    --graffiti-rusty-blue: #3a5f7d;
+
+    /* --- 通用邊框與 UI 映射 --- */
+    --border-thick: 4px solid var(--ink-shadow);
+    --border-thin: 2px solid var(--ink-shadow);
+
+    /* 將 app.css 變數映射至主題色 */
+    --app-bg: var(--skin-and-light-light);
+    --app-text: var(--ink-shadow);
+    --app-muted: var(--ink-shadow-light);
+    --app-border: var(--skin-and-light-dark);
+    --app-primary: var(--hero-blue);
+    --app-cta: var(--golden-era);
+    --app-cta-hover: var(--golden-era-light);
+    --app-radius: 14px;
+}
+
+/* === UI 組件容器 === */
+.app-container {
+    padding-top: 24px;
+    padding-bottom: 48px;
+}
+
+/* === 導覽列樣式 === */
+.navbar {
+    border-bottom: 1px solid var(--app-border);
+    backdrop-filter: blur(10px);
+}
+
+.navbar .nav-link {
+    color: var(--app-muted);
+    border-radius: 999px;
+    transition: all 0.2s ease;
+}
+
+.navbar .nav-link:hover {
+    color: var(--app-text);
+    background: rgba(0, 71, 171, 0.1); /* 英雄藍透明背景 */
+}
+
+.navbar .nav-link.is-active {
+    color: var(--hero-blue-dark);
+    background: rgba(0, 71, 171, 0.12);
+    border: 1px solid rgba(0, 71, 171, 0.22);
+}
+
+/* === 按鈕樣式 === */
+.btn-primary {
+    background-color: var(--app-cta);
+    border-color: var(--golden-era-dark);
+    color: var(--ink-shadow);
+    font-weight: 700;
+}
+
+.btn-primary:hover {
+    background-color: var(--app-cta-hover);
+    border-color: var(--golden-era-dark);
+    color: var(--ink-shadow);
+}
+
+.btn-outline-primary {
+    color: var(--hero-blue);
+    border-color: var(--hero-blue-light);
+}
+
+.btn-outline-primary:hover {
+    background-color: rgba(0, 71, 171, 0.08);
+    border-color: var(--hero-blue);
+    color: var(--hero-blue-dark);
+}
+
+/* === 卡片樣式 === */
+.card {
+    border: 1px solid var(--app-border);
+    border-radius: var(--app-radius);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+    background: #ffffff;
+}
+
+.card.hover-lift {
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        border-color 180ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card.hover-lift {
+        transition: none;
+    }
+}
+
+.card.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+    border-color: var(--hero-blue-light);
+}
+
+/* === 輔助類別 === */
+:focus-visible {
+    outline: 3px solid rgba(0, 71, 171, 0.45);
+    outline-offset: 2px;
+}
+
+.text-muted {
+    color: var(--ink-shadow-light) !important;
+}
+
+/* 字重工具類 */
+.fw-100 {
+    font-weight: 100;
+}
+.fw-200 {
+    font-weight: 200;
+}
+.fw-300 {
+    font-weight: 300;
+}
+.fw-400 {
+    font-weight: 400;
+}
+.fw-500 {
+    font-weight: 500;
+}
+.fw-600 {
+    font-weight: 600;
+}
+.fw-700 {
+    font-weight: 700;
+}
+.fw-800 {
+    font-weight: 800;
+}
+.fw-900 {
+    font-weight: 900;
+}
