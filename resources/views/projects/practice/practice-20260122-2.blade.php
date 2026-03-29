@@ -34,15 +34,15 @@
     <img src="https://picsum.photos/300/200" alt="" />
 
     <h1>免費圖庫 : unsplash</h1>
-    <img src="images/3DP-001.jpg" alt="" width="500px" />
-    <img src="images/3DP-002.jpg" alt="" width="500px" />
-    <img src="images/3DP-003.jpg" alt="" width="500px" />
+    <img src="{{ asset('images/3DP-001.jpg') }}" alt="" width="500px" />
+    <img src="{{ asset('images/3DP-002.jpg') }}" alt="" width="500px" />
+    <img src="{{ asset('images/3DP-003.jpg') }}" alt="" width="500px" />
 
     <h2>數值 VS 比例</h2>
     <p>width="300px"</p>
-    <img src="images/3DP-001.jpg" alt="" width="300px" />
+    <img src="{{ asset('images/3DP-001.jpg') }}" alt="" width="300px" />
     <p>width="50%"</p>
-    <img src="images/3DP-001.jpg" alt="" width="50%" />
+    <img src="{{ asset('images/3DP-001.jpg') }}" alt="" width="50%" />
     <p><i>嘗試縮放視窗寬度</i></p>
 
     <p>這是普通的文字連結，點擊後會在「當前分頁」跳轉：</p>
@@ -62,6 +62,6 @@
 
     <p>點擊下方的圖片，將會開啟「新的分頁」跳轉到目標網站：</p>
     <a href="https://www.wikipedia.org/" target="_blank" rel="noopener noreferrer">
-        <img src="images/3DP-001.jpg" alt="另開視窗的圖片連結" width="100px" />
+        <img src="{{ asset('images/3DP-001.jpg') }}" alt="另開視窗的圖片連結" width="100px" />
     </a>
 @endsection
