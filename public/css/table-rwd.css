@@ -1,0 +1,30 @@
+@media screen and (max-width: 768px) {
+    .table-responsive thread{
+        display: none;
+    }
+    .table-responsive tbody tr {
+        display: block;
+        border: 2px solid var(--crimson-strike-dark);
+        margin-top: 20px;
+    }
+    .table-responsive tbody tr td {
+        display: block;
+        overflow: hidden;
+    }
+    .table-responsive tbody tr td::before {
+        content: attr(data-th)" : ";
+        color: var(--ink-shadow-dark);
+        font-size: 20px;
+        font-weight: 900;
+        display: block;
+        float: right;
+        width: 30%;
+        text-align: right;
+        padding: 2em;
+    }
+    .table-responsive tbody tr td span {
+        display: block;
+        float: left;
+        width: 70%;
+    }
+}

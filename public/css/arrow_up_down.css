@@ -1,0 +1,23 @@
+.metadata-toggle {
+    border: 1px solid #ced4da;
+    background: #f8f9fa;
+    padding: 0.25rem;
+    line-height: 1;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.metadata-toggle .chevron {
+    width: 20px;
+    height: 20px;
+    display: block;
+    transition: transform 0.25s ease;
+}
+
+.metadata-toggle.collapsed .chevron {
+    transform: rotate(180deg);
+}

@@ -27,7 +27,7 @@
                 <p class="card-text text-muted">{{ $p->summary }}</p>
               @endif
 
-              <a class="btn btn-sm btn-primary" href="/projects/{{ $p->slug }}">View</a>
+              <a class="btn btn-sm btn-primary" href="{{ asset('/projects/' . $p->slug) }}">View</a>
             </div>
           </div>
         </div>
