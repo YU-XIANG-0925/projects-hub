@@ -9,45 +9,6 @@
 - **資料庫**：SQLite（預設）
 - **語系**：台灣正體中文（zh-TW）
 
-## 快速開始
-
-```bash
-# 安裝 PHP 相依套件
-composer install
-
-# 安裝 JS 相依套件並建置資產
-npm install && npm run build
-
-# 複製環境設定
-cp .env.example .env
-php artisan key:generate
-
-# 執行資料庫遷移
-php artisan migrate
-
-# 啟動所有開發服務（server + queue + logs + Vite）
-composer run dev
-```
-
-## 常用指令
-
-```bash
-# 僅啟動 Vite
-npm run dev
-
-# 執行測試
-php artisan test
-
-# 執行單一測試
-php artisan test --filter=TestClassName
-
-# 程式碼風格檢查（Laravel Pint）
-./vendor/bin/pint
-
-# 即時查看日誌
-php artisan pail
-```
-
 ## 路由結構
 
 | 路由 | 說明 |
