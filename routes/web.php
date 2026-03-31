@@ -20,6 +20,7 @@ Route::group(['prefix' => 'projects/practice'], function () {
     Route::get('/{slug}', function (string $slug) {
         $viewPath = "projects.practice.{$slug}";
         abort_unless(view() -> exists($viewPath), 404);
-        return view($viewPath);
+        $layout = request()->boolean('embed') ? 'layouts.bare' : 'layouts.app';
+        return view($viewPath, compact('layout'));
     });
 });

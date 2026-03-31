@@ -69,7 +69,7 @@
             <p class="h5 mb-3">Live Preview</p>
             <div class="card">
                 <div class="card-body p-0">
-                    <iframe src="{{ $project->embed_url }}" title="{{ $project->title }}"
+                    <iframe src="{{ $project->embed_url }}?embed=1" title="{{ $project->title }}"
                         style="width:100%; height:70vh; border:0; border-radius: 12px;" loading="lazy">
                     </iframe>
                 </div>

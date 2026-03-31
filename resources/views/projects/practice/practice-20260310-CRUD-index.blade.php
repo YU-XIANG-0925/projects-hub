@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends($layout ?? 'layouts.app')
 
 @section('title', 'CRUD 專案練習 - 新增產品')
 @section('other-styles')
