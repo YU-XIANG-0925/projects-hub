@@ -1,7 +1,14 @@
 const hotelListUrl = document.getElementById("hotelList").dataset.jsonUrl;
-const cityCountyDataUrl = document.getElementById("cityCountyData").dataset.jsonUrl;
+const cityCountyDataUrl =
+    document.getElementById("cityCountyData").dataset.jsonUrl;
+const imageDataUrl = document.getElementById("imageData").dataset.jsonUrl;
+
 let cityTownArray = [];
 let clearData = [];
+
+let currentPage = 1;
+const itemsPerPage = 8;
+let currentFilteredData = [];
 // get hotellist
 $.ajax({
     url: hotelListUrl,
@@ -24,10 +31,12 @@ $.ajax({
                 Town: normalize(item.PostalAddress?.Town),
                 StreetAddress: normalize(item.PostalAddress?.StreetAddress),
                 Tel: normalize(item.Telephones[0].Tel),
-                Description: normalize(item.Description),
+                Description:
+                    normalize(item.Description).substring(0, 50) + "...",
+                ImageUrl: normalize(item.Images[0]?.URL),
             };
             return processedItem;
-        });
+        }).filter((item) => item.ImageUrl !== "沒有資料");
         // console.log("處理後的資料:", clearData);
     },
 });
@@ -69,20 +78,26 @@ $("#citySelect").change(() => {
 $("#townSelect").change(() => {
     const selectedCity = $("#citySelect").val();
     const selectedTown = $("#townSelect").val();
-    let filteredHotels = [];
+
     if (selectedTown === "全區") {
-        filteredHotels = clearData.filter((item) => item.City === selectedCity);
+        currentFilteredData = clearData.filter(
+            (item) => item.City === selectedCity,
+        );
     } else {
-        filteredHotels = clearData.filter(
+        currentFilteredData = clearData.filter(
             (item) => item.City === selectedCity && item.Town === selectedTown,
         );
     }
-    $("#hotelCardBody").empty();
-    filteredHotels.forEach((item) => {
-        let strHtml = `
-                    `;
-        $("#hotelCardBody").append(strHtml);
-    });
+    $("#hotelCardContainer").empty();
+    renderPage(currentFilteredData, 1);
+});
+
+$(document).on('click', '.page-link', function (e) {
+    e.preventDefault();
+    const page = parseInt($(this).data('page'));
+    if (!isNaN(page) && page > 0) {
+        renderPage(currentFilteredData, page);
+    }
 });
 
 function normalize(data) {
@@ -106,4 +121,113 @@ function getCityCountryList(data) {
     });
 }
 
-function renderTable(hotels) {}
+function renderCard(hotels) {
+    let strHtml = `
+                <div class="col mb-2">
+                    <div class="card h-100">
+                        <img src="${hotels.ImageUrl}" alt="" class="card-img-top" style="height: 200px; object-fit: cover;">
+                        <div class="card-body d-flex flex-column">
+                            <div class="h4 mt-1 mb-1">
+                                ${hotels.HotelName}
+                            </div>
+                            <div class="mb-2">
+                                <div class="text-muted small">地址</div>
+                                <div class="fw-semibold">${hotels.City} ${hotels.Town} ${hotels.StreetAddress}</div>
+                            </div>
+                            <div class="mb-2">
+                                <div class="text-muted small">電話</div>
+                                <div class="fw-semibold">${hotels.Tel}</div>
+                            </div>
+                            <div class="mb-2">
+                                <div class="text-muted small">簡介</div>
+                                <div class="fw-semibold">${hotels.Description}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+    $("#hotelCardContainer").append(strHtml);
+}
+
+function renderPage(data, page) {
+    // print data type
+    console.log(typeof data);
+    
+    
+    currentPage = page;
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const pageData = data.slice(start, end);
+
+    $("#hotelCardContainer").empty();
+    pageData.forEach((item) => renderCard(item));
+    renderPagination(data.length, page);
+}
+
+function renderPagination(totalItems, currentPage) {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const $pagination = $("#pagination").empty();
+
+    if (totalPages <= 1) return;
+
+    // Previous button
+    $pagination.append(`
+        <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
+            <a href="#" class="page-link" data-page="${currentPage - 1}">Previous</a>
+        </li>
+    `);
+
+    // Page numbers
+    const pages = getPageNumbers(currentPage, totalPages);
+
+    pages.forEach((page) => {
+        if (pages === "...") {
+            $pagination.append(
+                `<li class="page-item disabled"><span class="page-link">...</span></li>`,
+            );
+        } else {
+            $pagination.append(`
+                <li class="page-item ${page === currentPage ? 'active' : ''}">
+                    <a class="page-link" href="#" data-page="${page}">${page}</a>
+                </li>
+            `);
+        }
+    });
+
+    // Next button
+    $pagination.append(`
+        <li class="page-item ${currentPage === totalPages ? "disabled" : ""}">
+            <a class="page-link" href="#" data-page="${currentPage + 1}">Next</a>
+        </li>
+    `);
+}
+
+function getPageNumbers(current, total) {
+    if (total <= 7) {
+        // 總頁數少，全部顯示
+        return Array.from({ length: total }, (_, i) => i + 1);
+    }
+
+    const pages = [];
+
+    if (current <= 4) {
+        // 靠近開頭：1 2 3 4 5 ... 10
+        for (let i = 1; i <= 5; i++) pages.push(i);
+        pages.push('...');
+        pages.push(total);
+    } else if (current >= total - 3) {
+        // 靠近結尾：1 ... 6 7 8 9 10
+        pages.push(1);
+        pages.push('...');
+        for (let i = total - 4; i <= total; i++) pages.push(i);
+    } else {
+        // 中間：1 ... 4 5 6 ... 10
+        pages.push(1);
+        pages.push('...');
+        for (let i = current - 1; i <= current + 1; i++) pages.push(i);
+        pages.push('...');
+        pages.push(total);
+    }
+
+    return pages;
+}
+

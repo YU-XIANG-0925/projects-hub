@@ -1,5 +1,6 @@
 const hotelListUrl = document.getElementById("hotelList").dataset.jsonUrl;
-const cityCountyDataUrl = document.getElementById("cityCountyData").dataset.jsonUrl;
+const cityCountyDataUrl =
+    document.getElementById("cityCountyData").dataset.jsonUrl;
 let cityTownArray = [];
 let clearData = [];
 // get hotellist
@@ -79,14 +80,7 @@ $("#townSelect").change(() => {
     }
     $("#hotelTableBody").empty();
     filteredHotels.forEach((item) => {
-        let strHtml = `
-                    <tr>
-                        <td>${item.HotelName}</td>
-                        <td>${item.City} ${item.Town} ${item.StreetAddress}</td>
-                        <td>${item.Tel}</td>
-                        <td>${item.Description}</td>
-                    </tr>`;
-        $("#hotelTableBody").append(strHtml);
+        renderTable(item);
     });
 });
 
@@ -111,4 +105,13 @@ function getCityCountryList(data) {
     });
 }
 
-function renderTable(hotels) {}
+function renderTable(hotels) {
+    let strHtml = `
+                    <tr>
+                        <td>${hotels.HotelName}</td>
+                        <td>${hotels.City} ${hotels.Town} ${hotels.StreetAddress}</td>
+                        <td>${hotels.Tel}</td>
+                        <td>${hotels.Description}</td>
+                    </tr>`;
+    $("#hotelTableBody").append(strHtml);
+}
