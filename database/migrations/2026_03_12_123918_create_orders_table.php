@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('username', 8);
-            $table->string('pname', 8);
-            $table->integer('pnum');
+            // 建立與 users 表的關聯
+            // constrained() 方法會自動推斷出外鍵名稱和參照的表，並設置 ON DELETE CASCADE
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('product_name');
+            $table->unsignedInteger('quantity')->default(1);
             $table->timestamps();
         });
     }
