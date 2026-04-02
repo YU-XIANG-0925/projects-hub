@@ -32,18 +32,27 @@
                 {{-- 登入表單 --}}
                 <div class="tab-pane fade show active px-4 pt-4 pb-4" id="modal-login" role="tabpanel"
                     aria-labelledby="modal-login-tab">
-                    <form action="#{{-- route('login') --}}" method="POST">
+                    <form action="{{ route('login') }}" method="POST">
                         @csrf
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="modalLoginEmail" name="email"
-                                placeholder="name@example.com" required>
-                            <label for="modalLoginEmail">電子郵件</label>
+                            <input type="text" class="form-control @error('credential') is-invalid @enderror"
+                                id="modalLoginCredential" name="credential"
+                                placeholder="使用者名稱 / 電子郵件 / 手機號碼"
+                                value="{{ old('credential') }}" required autocomplete="username">
+                            <label for="modalLoginCredential">使用者名稱 / 電子郵件 / 手機號碼</label>
+                            @error('credential')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="modalLoginPassword" name="password"
-                                placeholder="Password" required>
+                            <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                id="modalLoginPassword" name="password"
+                                placeholder="Password" required autocomplete="current-password">
                             <label for="modalLoginPassword">密碼</label>
+                            @error('password')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -56,6 +65,12 @@
                             </div>
                             <a href="#" class="text-decoration-none small">忘記密碼？</a>
                         </div>
+
+                        <div class="form-floating mb-3">
+                            {{-- 表單中加入驗證的區域 --}}
+                            <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
+                        </div>
+
 
                         <button type="submit" class="btn btn-primary w-100">登入系統</button>
                     </form>
@@ -77,6 +92,12 @@
                             <input type="email" class="form-control" id="modalRegisterEmail" name="email"
                                 placeholder="name@example.com" required>
                             <label for="modalRegisterEmail">電子郵件</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="tel" class="form-control" id="modalRegisterPhone" name="phone"
+                                placeholder="0912345678">
+                            <label for="modalRegisterPhone">手機號碼（選填）</label>
                         </div>
 
                         <div class="form-floating mb-3">

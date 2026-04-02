@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -21,7 +22,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',    // 使用者可自行填寫
         'password',
+        // 注意 : role 刻意不放此處，防止 Mass Assignment 攻擊
+        // 角色變更只能透過伺服器端程式碼指定 $user->role = UserRole::Admin
     ];
 
     /**
@@ -44,8 +48,17 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
+            'role'              => UserRole::class, // Enum cast : 非法值無法寫入
         ];
+    }
+
+    /**
+     * 判斷使用者是否為管理員（供 Blade / Policy 使用）
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === UserRole::Admin;
     }
 
     public function orders(): HasMany
