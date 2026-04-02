@@ -4,7 +4,7 @@
     表單 - 飲料訂購
 @endsection
 
-@section('other-styles')
+@section('other-links')
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 @endsection
 

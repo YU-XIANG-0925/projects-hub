@@ -1,7 +1,7 @@
 @extends($layout ?? 'layouts.app')
 
 @section('title', 'ch7. Flex')
-@section('other-styles')
+@section('other-links')
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
     <style>
         .bg-cover {

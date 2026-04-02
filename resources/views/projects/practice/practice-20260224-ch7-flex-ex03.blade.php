@@ -1,7 +1,7 @@
 @extends($layout ?? 'layouts.app')
 
 @section('title', 'ch7. Flex')
-@section('other-styles')
+@section('other-links')
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/practice-20260224-ch7-flex-ex03.css') }}">
 @endsection

@@ -2,7 +2,7 @@
 
 @section('title', $project->title)
 
-@section('other-styles')
+@section('other-links')
     <link rel="stylesheet" href="{{ asset('css/arrow_up_down.css') }}">
 @endsection
 

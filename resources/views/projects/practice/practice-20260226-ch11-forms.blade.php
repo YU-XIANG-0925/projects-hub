@@ -4,7 +4,7 @@
     ch11. 表單
 @endsection
 
-@section('other-styles')
+@section('other-links')
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 @endsection
 

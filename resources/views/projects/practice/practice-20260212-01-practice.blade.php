@@ -2,7 +2,7 @@
 
 @section('title', 'ch06. 寵物遺失啟事列表')
 
-@section('other-styles')
+@section('other-links')
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 @endsection
 

@@ -2,7 +2,7 @@
 
 @section('title', 'ch3. 文字風格 練習')
 
-@section('other-styles')
+@section('other-links')
     <style>
         .box01 {
             width: 100%;

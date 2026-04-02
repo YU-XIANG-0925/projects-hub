@@ -1,7 +1,7 @@
 @extends($layout ?? 'layouts.app')
 
 @section('title', 'CRUD 專案練習 - 新增產品')
-@section('other-styles')
+@section('other-links')
     <link rel="stylesheet" href="{{ asset('css/table-rwd.css') }}">
 @endsection
 

@@ -2,7 +2,7 @@
 
 @section('title', '切版練習')
 
-@section('other-styles')
+@section('other-links')
     <style>
         .box {
             height: 100px;

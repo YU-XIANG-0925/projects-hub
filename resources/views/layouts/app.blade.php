@@ -8,7 +8,7 @@
     <title>@yield('title', 'Personal Portal')</title>
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/all_might_color.css') }}">
-    @yield('other-styles')
+    @yield('other-links')
 </head>
 
 <body>

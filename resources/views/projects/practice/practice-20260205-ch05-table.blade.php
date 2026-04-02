@@ -2,7 +2,7 @@
 
 @section('title', 'ch05. 表格RWD 練習')
 
-@section('other-styles')
+@section('other-links')
     <style>
         /* 頁面整體風格 */
         body {

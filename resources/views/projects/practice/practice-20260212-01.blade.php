@@ -2,7 +2,7 @@
 
 @section('title', 'ch06. 旅遊美食資料結構')
 
-@section('other-styles')
+@section('other-links')
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 @endsection
 

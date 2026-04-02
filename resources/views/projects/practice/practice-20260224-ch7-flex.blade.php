@@ -4,7 +4,7 @@
     ch7. Flex
 @endsection
 
-@section('other-styles')
+@section('other-links')
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <style>
         .box01 {

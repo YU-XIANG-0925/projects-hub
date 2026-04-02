@@ -1,6 +1,6 @@
 @extends($layout ?? 'layouts.app')
 
-@section('other-styles')
+@section('other-links')
     <style>
         .section01 {
             background-color: var(--hero-blue-dark);

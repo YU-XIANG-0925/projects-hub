@@ -4,7 +4,7 @@
     ch7. Flex
 @endsection
 
-@section('other-styles')
+@section('other-links')
     <style>
         .box01 {
             height: 120px;

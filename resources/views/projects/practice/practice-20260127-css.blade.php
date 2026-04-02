@@ -1,6 +1,6 @@
 @extends($layout ?? 'layouts.app')
 
-@section('other-styles')
+@section('other-links')
     <style>
         .box-100 {
             width: 100px;

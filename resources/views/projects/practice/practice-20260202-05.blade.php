@@ -2,7 +2,7 @@
 
 @section('title', 'ch05. 表格風格 練習')
 
-@section('other-styles')
+@section('other-links')
     <style>
         @media screen and (max-width: 768px) {
             .table-rwd thead {

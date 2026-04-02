@@ -1,6 +1,6 @@
 @extends($layout ?? 'layouts.app')
 
-@section('other-styles')
+@section('other-links')
     <style>
         body {
             /* 背景色：改用皮膚光-淺色 */
