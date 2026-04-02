@@ -11,8 +11,6 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::view('/', 'home.index');
-Route::get('contact-us', [HomeController::class, 'index']);
-Route::post('contact-us', [HomeController::class, 'store'])->name('contact.store');
 
 Route::get('/projects', [ProjectController::class, 'index']);
 Route::get('/projects/{project:slug}', [ProjectController::class, 'show']);

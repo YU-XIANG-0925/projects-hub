@@ -32,12 +32,11 @@
                 {{-- 登入表單 --}}
                 <div class="tab-pane fade show active px-4 pt-4 pb-4" id="modal-login" role="tabpanel"
                     aria-labelledby="modal-login-tab">
-                    <form action="{{ route('login') }}" method="POST">
+                    <form id="loginForm" action="{{ route('login') }}" method="POST">
                         @csrf
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control @error('credential') is-invalid @enderror"
-                                id="modalLoginCredential" name="credential"
-                                placeholder="使用者名稱 / 電子郵件 / 手機號碼"
+                                id="modalLoginCredential" name="credential" placeholder="使用者名稱 / 電子郵件 / 手機號碼"
                                 value="{{ old('credential') }}" required autocomplete="username">
                             <label for="modalLoginCredential">使用者名稱 / 電子郵件 / 手機號碼</label>
                             @error('credential')
@@ -47,8 +46,8 @@
 
                         <div class="form-floating mb-3">
                             <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                id="modalLoginPassword" name="password"
-                                placeholder="Password" required autocomplete="current-password">
+                                id="modalLoginPassword" name="password" placeholder="Password" required
+                                autocomplete="current-password">
                             <label for="modalLoginPassword">密碼</label>
                             @error('password')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -66,11 +65,7 @@
                             <a href="#" class="text-decoration-none small">忘記密碼？</a>
                         </div>
 
-                        <div class="form-floating mb-3">
-                            {{-- 表單中加入驗證的區域 --}}
-                            <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
-                        </div>
-
+                        <input type="hidden" name="g-recaptcha-response" id="recaptchaLoginToken">
 
                         <button type="submit" class="btn btn-primary w-100">登入系統</button>
                     </form>
@@ -115,7 +110,32 @@
                     </form>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const form = this;
+        grecaptcha.enterprise.ready(function () {
+            grecaptcha.enterprise.execute('{{ config("services.recaptcha.site_key") }}', { action: 'login' })
+                .then(function (token) {
+                    document.getElementById('recaptchaLoginToken').value = token;
+                    form.submit();
+                });
+        });
+    });
+
+    // 點「註冊帳號」按鈕時自動切換到註冊頁籤
+    document.querySelectorAll('[data-auth-tab="register"]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            setTimeout(function () {
+                const tab = document.getElementById('modal-register-tab');
+                if (tab) bootstrap.Tab.getOrCreateInstance(tab).show();
+            }, 50);
+        });
+    });
+</script>
+@endpush

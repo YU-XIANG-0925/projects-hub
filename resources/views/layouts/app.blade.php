@@ -8,6 +8,7 @@
     <title>@yield('title', 'Personal Portal')</title>
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/all_might_color.css') }}">
+    <script src="https://www.google.com/recaptcha/enterprise.js?render={{ config('services.recaptcha.site_key') }}" async defer></script>
     @yield('other-links')
 </head>
 
@@ -47,8 +48,10 @@
                     mt-3: 在所有裝置上，增加上邊距離3個單位
                     mt-lg-0: 在大螢幕以上的裝置上，移除上邊距離，讓按鈕與導覽列內容在同一水平線上
                      --}}
-                    <a href="/login" class="btn btn-outline-primary me-2 px-4 rounded-pill">登入</a>
-                    <a href="/register" class="btn btn-primary px-4 rounded-pill shadow-sm">註冊帳號</a>
+                    <button type="button" class="btn btn-outline-primary me-2 px-4 rounded-pill"
+                        data-bs-toggle="modal" data-bs-target="#authModal">登入</button>
+                    <button type="button" class="btn btn-primary px-4 rounded-pill shadow-sm"
+                        data-bs-toggle="modal" data-bs-target="#authModal" data-auth-tab="register">註冊帳號</button>
                 </div>
             </div>
         </div>
@@ -59,7 +62,9 @@
 
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
-    
+
+    @include('layouts.modal')
+
     @stack('scripts')
 </body>
 

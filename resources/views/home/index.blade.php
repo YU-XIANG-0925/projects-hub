@@ -2,10 +2,6 @@
 
 @section('title', '首頁')
 
-@section('other-links')
-    <script src="https://www.google.com/recaptcha/enterprise.js?render=6LfRcaIsAAAAAJM-wcbeL2yBaPMgcjz2CbKY0imi"></script>
-@endsection
-
 @section('content')
     <h1 class="mb-3">Hello, I'm Yu-Xiang</h1>
     <p class="text-muted">Personal Portfolio / dashboard / resume.</p>
@@ -23,6 +19,4 @@
         <a class="btn btn-outline-success" href="/projects/practice/practice-20260310-CRUD-showTable">CRUD練習2 - CRUD-table-ajax版</a> --}}
     </div>
 
-    {{-- Modal with login / register forms --}}
-    @extends('layouts.modal')
 @endsection
