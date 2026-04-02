@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     /**
+     * reCAPTCHA
+     */
+
+    /**
      * 登入：接受 使用者名稱 / 電子郵件 / 手機號碼 + 密碼
      */
     public function login(Request $request): RedirectResponse
@@ -51,7 +55,8 @@ class AuthController extends Controller
     }
 
     /**
-     * 依輸入內容判斷應比對哪個欄位：
+     * 欄位邏輯:
+     *   依照輸入的內容判斷應比對哪個欄位：
      *   - 含 @ 符號 → email
      *   - 純數字 / 含 + - 空格且 7~20 字元 → phone
      *   - 其餘 → name（使用者名稱）
