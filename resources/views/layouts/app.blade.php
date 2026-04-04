@@ -8,12 +8,13 @@
     <title>@yield('title', 'Personal Portal')</title>
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/all_might_color.css') }}">
-    <script src="https://www.google.com/recaptcha/enterprise.js?render={{ config('services.recaptcha.site_key') }}" async defer></script>
+    <script src="https://www.google.com/recaptcha/enterprise.js?render={{ config('services.recaptcha.site_key') }}" async
+        defer></script>
     @yield('other-links')
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
         {{-- 
         navbar: 導覽列core，定義導覽列布局、間距、內容物(ex. Brand or Naw)的排列順序。
         navbar-light: 定義導覽列的背景顏色為淺色 P.S BS5.3+ 被data-bs-theme="light"
@@ -41,17 +42,18 @@
                     <li class="nav-item"><a class="nav-link px-3" href="/resume">個人履歷</a></li>
                     <li class="nav-item"><a class="nav-link px-3" href="/dashboard">管理後台</a></li>
                 </ul>
-                <div class="d-flex ms-lg-3 mt-3 mt-lg-0">
-                    {{-- 
-                    d-flex: 定義為彈性容器，讓子元素可以自由調整大小和位置
-                    ms-lg-3: 在大螢幕以上的裝置上，增加左邊距離3個單位
-                    mt-3: 在所有裝置上，增加上邊距離3個單位
-                    mt-lg-0: 在大螢幕以上的裝置上，移除上邊距離，讓按鈕與導覽列內容在同一水平線上
-                     --}}
-                    <button type="button" class="btn btn-outline-primary me-2 px-4 rounded-pill"
-                        data-bs-toggle="modal" data-bs-target="#authModal">登入</button>
-                    <button type="button" class="btn btn-primary px-4 rounded-pill shadow-sm"
-                        data-bs-toggle="modal" data-bs-target="#authModal" data-auth-tab="register">註冊帳號</button>
+                <div class="d-flex ms-auto mt-3 mt-md-0">
+                    @auth
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-danger px-4 rounded-pill">登出</button>
+                        </form>
+                    @else
+                        <button type="button" class="btn btn-outline-primary me-2 px-4 rounded-pill" data-bs-toggle="modal"
+                            data-bs-target="#authModal">登入</button>
+                        <button type="button" class="btn btn-primary px-4 rounded-pill shadow-sm" data-bs-toggle="modal"
+                            data-bs-target="#authModal" data-auth-tab="register">註冊帳號</button>
+                    @endauth
                 </div>
             </div>
         </div>

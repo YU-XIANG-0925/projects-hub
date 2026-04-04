@@ -9,6 +9,7 @@ use App\Http\Controllers\ProjectController;
 // Auth
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::view('/', 'home.index');
 

@@ -4,14 +4,20 @@
 
 @section('content')
     <h1 class="mb-3">Hello, I'm Yu-Xiang</h1>
-    <p class="text-muted">Personal Portfolio / dashboard / resume.</p>
+    @auth
+        <p class="text-muted">You are {{ Auth::user()->name }}</p>
+    @else
+        <p class="text-muted">Personal Portfolio / dashboard / resume.</p>
+    @endauth
 
     <div class="d-flex gap-2">
         <a class="btn btn-primary" href="/projects">View My Projects</a>
         <a class="btn btn-secondary" href="/resume">View My Resume</a>
+        @guest
         <button class="btn btn-outline-primary fw-bold px-4" data-bs-toggle="modal" data-bs-target="#authModal">
             登入 / 註冊
         </button>
+        @endguest
         {{-- 
         <a class="btn btn-success" href="/projects/practice/practice-20260317-js-ch03-ex02-hotellist">今日課程 - js-ch03-ex02-hotellist</a>
         <a class="btn btn-info" href="/projects/practice/practice-20260317-js-ch03-ex03-hotellist">今日課程練習 - js-ch03-ex03-hotellist</a>

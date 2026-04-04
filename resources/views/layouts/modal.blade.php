@@ -74,38 +74,57 @@
                 {{-- 註冊表單 --}}
                 <div class="tab-pane fade px-4 pt-4 pb-4" id="modal-register" role="tabpanel"
                     aria-labelledby="modal-register-tab">
-                    {{-- 整合 Laravel 時： <form method="POST" action="{{ route('register') }}"> --}}
-                    <form action="#{{-- route('register') --}}" method="POST">
+                    <form id="registerForm" action="{{ route('register') }}" method="POST">
                         @csrf
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="modalRegisterName" name="name"
-                                placeholder="John Doe" required>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                id="modalRegisterName" name="name" placeholder="John Doe" value="{{ old('name') }}"
+                                required autocomplete="username">
                             <label for="modalRegisterName">使用者名稱</label>
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="modalRegisterEmail" name="email"
-                                placeholder="name@example.com" required>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                id="modalRegisterEmail" name="email" placeholder="name@example.com"
+                                value="{{ old('email') }}" required autocomplete="email">
                             <label for="modalRegisterEmail">電子郵件</label>
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="tel" class="form-control" id="modalRegisterPhone" name="phone"
-                                placeholder="0912345678">
+                            <input type="tel" class="form-control @error('phone') is-invalid @enderror"
+                                id="modalRegisterPhone" name="phone" placeholder="0912345678"
+                                value="{{ old('phone') }}" autocomplete="tel">
                             <label for="modalRegisterPhone">手機號碼（選填）</label>
+                            @error('phone')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="modalRegisterPassword" name="password"
-                                placeholder="Password" required>
+                            <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                id="modalRegisterPassword" name="password" placeholder="Password" required
+                                autocomplete="new-password">
                             <label for="modalRegisterPassword">密碼</label>
+                            @error('password')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-floating mb-4">
                             <input type="password" class="form-control" id="modalRegisterPasswordConfirm"
-                                name="password_confirmation" placeholder="Confirm Password" required>
+                                name="password_confirmation" placeholder="Confirm Password" required
+                                autocomplete="new-password">
                             <label for="modalRegisterPasswordConfirm">確認密碼</label>
                         </div>
+
+                        <input type="hidden" name="g-recaptcha-response" id="recaptchaRegisterToken">
+
                         <button type="submit" class="btn btn-primary w-100">建立帳號</button>
                     </form>
                 </div>
@@ -115,27 +134,43 @@
 </div>
 
 @push('scripts')
-<script>
-    document.getElementById('loginForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const form = this;
-        grecaptcha.enterprise.ready(function () {
-            grecaptcha.enterprise.execute('{{ config("services.recaptcha.site_key") }}', { action: 'login' })
-                .then(function (token) {
-                    document.getElementById('recaptchaLoginToken').value = token;
-                    form.submit();
-                });
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = this;
+            grecaptcha.enterprise.ready(function() {
+                grecaptcha.enterprise.execute('{{ config('services.recaptcha.site_key') }}', {
+                        action: 'login'
+                    })
+                    .then(function(token) {
+                        document.getElementById('recaptchaLoginToken').value = token;
+                        form.submit();
+                    });
+            });
         });
-    });
 
-    // 點「註冊帳號」按鈕時自動切換到註冊頁籤
-    document.querySelectorAll('[data-auth-tab="register"]').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            setTimeout(function () {
-                const tab = document.getElementById('modal-register-tab');
-                if (tab) bootstrap.Tab.getOrCreateInstance(tab).show();
-            }, 50);
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = this;
+            grecaptcha.enterprise.ready(function() {
+                grecaptcha.enterprise.execute('{{ config('services.recaptcha.site_key') }}', {
+                        action: 'register'
+                    })
+                    .then(function(token) {
+                        document.getElementById('recaptchaRegisterToken').value = token;
+                        form.submit();
+                    });
+            });
         });
-    });
-</script>
+
+        // 點「註冊帳號」按鈕時自動切換到註冊頁籤
+        document.querySelectorAll('[data-auth-tab="register"]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                setTimeout(function() {
+                    const tab = document.getElementById('modal-register-tab');
+                    if (tab) bootstrap.Tab.getOrCreateInstance(tab).show();
+                }, 50);
+            });
+        });
+    </script>
 @endpush
